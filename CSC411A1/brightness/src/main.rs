@@ -5,7 +5,7 @@ use std::io;
 fn main() {
     let argument_count: usize = env::args().len();
     let input: Option<String>;
-    
+
     // Error if there is more than one argument
     if argument_count > 2 {
         assert!(env::args().len() == 2);
@@ -22,9 +22,7 @@ fn main() {
         io::stdin()
             .read_line(&mut temp_input)
             .expect("Failed to read line");
-
-        input = Some(temp_input.trim().to_string());
-            
+        input = Some(temp_input.trim().to_string());        
     }
     let img = GrayImage::read(input.as_deref()).unwrap();
     let mut counter: f32 = 0.0;
