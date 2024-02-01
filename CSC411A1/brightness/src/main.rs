@@ -1,21 +1,30 @@
 use csc411_image::{Read, GrayImage}; 
 use std::env;
+use std::io;
 
 fn main() {
     let argument_count: usize = env::args().len();
     let input: Option<String>;
+    
+    // Error if there is more than one argument
     if argument_count > 2 {
         assert!(env::args().len() == 2);
         return;
-        // panic! ("Can't have more than two arguments");
-        // return 0;
-        // input = env::args().nth(1);
     }
+    // Take the first argument
     else if argument_count == 2 {
         input = env::args().nth(1);
     }
+    // Read from stdin
     else {
-        input = env::args().nth(1);
+        println!("Please enter some text:");
+        let mut temp_input = String::new();
+        io::stdin()
+            .read_line(&mut temp_input)
+            .expect("Failed to read line");
+
+        input = Some(temp_input.trim().to_string());
+            
     }
     let img = GrayImage::read(input.as_deref()).unwrap();
     let mut counter: f32 = 0.0;
