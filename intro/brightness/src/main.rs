@@ -16,15 +16,19 @@ fn main() {
     }
     // Read from stdin
     else {
+        // Creates a variable to store stdin input due to variable type conflicts
         let mut temp_input = String::new();
         io::stdin()
             .read_line(&mut temp_input)
             .expect("Failed to read line");
         input = Some(temp_input.trim().to_string());        
     }
+    // Access image
     let img = GrayImage::read(input.as_deref()).unwrap();
+    // Intialize a counter vairable
     let mut counter: f32 = 0.0;
     let vec_length: f32 = img.pixels.len() as f32;
+    // Iterate over all the pixels and calculate the average
     for pixel in img.pixels {
         counter = counter + (pixel.value as f32 / img.denominator as f32 );
     }
