@@ -1,4 +1,3 @@
-workspace = { members = ["sudoku"] }
 [package]
 name = "array2"
 version = "0.1.0"

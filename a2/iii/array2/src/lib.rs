@@ -1,4 +1,14 @@
+/*
+The Array2<T> structure is a generic two-dimensional array implementation in Rust, designed to efficiently store 
+and manipulate grid-like data structures. It is particularly suited for applications such as game development and 
+scientific computing where two-dimensional data structures are commonly used. The structure ensures that all rows
+ and columns maintain consistent lengths, thereby preserving the rectangular shape of the data.
+*/
+
 #[derive(Debug, Clone, Eq, PartialEq, PartialOrd)]
+// `T`: The type of elements stored in the array. `T` must implement the `Clone`, `Default`, `PartialEq`, and
+// `std::fmt::Display` traits. These constraints ensure that elements can be duplicated, a default value can be
+// generated, elements can be compared for equality, and they can be displayed.
 pub struct Array2<T: Clone> {
     width: usize,
     height: usize,
@@ -30,6 +40,10 @@ impl<T> Array2<T> where T: Clone + Default + PartialEq + std::fmt::Display{
     }
 
     // Constructs an Array in column-major
+    // `elements`: A vector of elements in column-major order.
+    // `width`: The number of columns in the array.
+    // `height`: The number of rows in the array.
+    // Returns an `Array2<T>` instance with elements ordered in column-major.
     pub fn from_col_major(elements: Vec<T>, width: usize, height: usize) -> Self {
         
         // Create a new vector to store the elements in column-major order
@@ -49,6 +63,10 @@ impl<T> Array2<T> where T: Clone + Default + PartialEq + std::fmt::Display{
     }
 
     // Constructs an Array in row-major 
+    // `elements`: A vector of elements in row-major order.
+    // `width`: The number of columns in the array.
+    // `height`: The number of rows in the array.
+    // Returns an `Array2<T>` instance with elements ordered in row-major.
     pub fn from_row_major(elements: Vec<T>, width: usize, height: usize) -> Self {
         Array2 {
             width,
@@ -58,11 +76,13 @@ impl<T> Array2<T> where T: Clone + Default + PartialEq + std::fmt::Display{
     }
 
     // Iterator over the elements in row-major order.
+    // Returns an iterator over the elements in row-major order.
     pub fn iter_row_major(&self) -> impl Iterator<Item = &T> {
         self.elements.iter()
     }
 
     // Iterator over the elements in column-major order.
+    // Returns an iterator over the elements in column-major order.
     pub fn iter_col_major(&self) -> impl Iterator<Item = &T> {
         (0..self.width * self.height).map(move |index| {
             let col = index / self.height;
@@ -72,6 +92,8 @@ impl<T> Array2<T> where T: Clone + Default + PartialEq + std::fmt::Display{
     }   
 
     // Finds an element in the array and returns its position.
+    // `target`: The element to search for.
+    // Returns the position of the element in the array if found, otherwise `None`.
     pub fn find_element(&self, target: &T) -> Option<(usize, usize)> {
         for i in 0..self.height {
             for j in 0..self.width {
@@ -84,6 +106,9 @@ impl<T> Array2<T> where T: Clone + Default + PartialEq + std::fmt::Display{
     }
 
     // Function to determine if a row is valid
+    // `row`: The row to check for validity.
+    // `to_usize`: A function that converts an element to a `usize`.
+    // Returns `true` if the row is valid, otherwise `false`.
     pub fn valid_row<F>(&self, row: usize, to_usize: F) -> bool
     // Trait specifying that F must be a function or a closure that takes a reference to T and returns an Option<usize>
     where
@@ -114,6 +139,9 @@ impl<T> Array2<T> where T: Clone + Default + PartialEq + std::fmt::Display{
     }
     
     // Function to determine if a column is valid
+    // `col`: The column to check for validity.
+    // `to_usize`: A function that converts an element to a `usize`.
+    // Returns `true` if the column is valid, otherwise `false`.
     pub fn valid_col<F>(&self, col: usize, to_usize: F) -> bool
     where
         F: Fn(&T) -> Option<usize>,
@@ -139,6 +167,9 @@ impl<T> Array2<T> where T: Clone + Default + PartialEq + std::fmt::Display{
     }
 
     // Function to determine if a subgrid is valid
+    // `row`: The row of the top-left corner of the subgrid.
+    // `col`: The column of the top-left corner of the subgrid.
+    // `to_usize`: A function that converts an element to a `usize`.
     pub fn valid_subgrid<F>(&self, row: usize, col: usize, to_usize: F) -> bool
     where
         F: Fn(&T) -> Option<usize>,
@@ -169,6 +200,8 @@ impl<T> Array2<T> where T: Clone + Default + PartialEq + std::fmt::Display{
     }
 
     // Function to determine if the entire Sudoku is valid
+    // `to_usize`: A function that converts an element to a `usize`.
+    // Returns `true` if the Sudoku is valid, otherwise `false`.
     pub fn valid_sudoku<F>(&self, to_usize: F) -> bool
     where
         F: Fn(&T) -> Option<usize> + Copy,

@@ -41,7 +41,8 @@ fn main() {
     }
     // Create a 9x9 array from the vector
     let array = array2::Array2::new(my_vec,9,9);
-
+    
+    // Function to convert an i32 to a usize
     let to_usize = |x: &i32| Some(*x as usize);
 
     if array.valid_sudoku(to_usize) {
