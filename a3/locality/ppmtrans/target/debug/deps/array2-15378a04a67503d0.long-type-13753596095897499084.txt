@@ -1,0 +1,1 @@
+Map<Enumerate<impl Iterator<Item = &((T, T), (T, T))>>, {closure@/Users/mattboekamp/Desktop/csc411/CSC411/a3/locality/array2/src/array2.rs:228:54: 228:73}>
