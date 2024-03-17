@@ -1,1 +1,0 @@
-Map<Enumerate<std::slice::Iter<'_, ((T, T), (T, T))>>, {closure@/Users/mattboekamp/Desktop/csc411/CSC411/a3/locality/array2/src/array2.rs:199:42: 199:61}>
