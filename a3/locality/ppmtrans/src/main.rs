@@ -1,6 +1,6 @@
 extern crate array2;
 use csc411_image::{Read, RgbImage, Write};
-use clap::Parser;
+use std::env;
 use array2::Array2;
 
 #[derive(Parser, Debug)]
@@ -61,3 +61,6 @@ fn main() {
     // Print the image to stdout
     let _image_output = image.write(Some("output.ppm"));
     }
+
+
+    

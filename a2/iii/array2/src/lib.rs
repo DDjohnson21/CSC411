@@ -226,4 +226,27 @@ impl<T> Array2<T> where T: Clone + Default + PartialEq + std::fmt::Display{
         }
         true
     }
+
+
+
+
+    // added for testing 
+    // convert rgb to graysclae image? 
+    pub fn rgb_to_gray(&self) -> Array2<f64> {
+        let mut gray_elements = vec![0.0; self.width * self.height];
+        for i in 0..self.height {
+            for j in 0..self.width {
+                let index = i * self.width + j;
+                let r = self.elements[index].clone();
+                let g = self.elements[index + self.width * self.height].clone();
+                let b = self.elements[index + 2 * self.width * self.height].clone();
+                gray_elements[index] = 0.299 * r + 0.587 * g + 0.114 * b;
+            }
+        }
+        Array2 {
+            width: self.width,
+            height: self.height,
+            elements: gray_elements,
+        }
+    }
 }
